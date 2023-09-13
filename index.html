@@ -150,6 +150,8 @@
       </div>
       <p class="lead">
         <a id="btGerar" href="#" class="btn btn-lg btn-secondary">Gerar</a>
+        <a id="btShow" href="#" class="btn btn-lg btn-secondary">Mostrar</a>
+        <a id="btHide" href="#" class="btn btn-lg btn-secondary">Esconder</a>
       </p>
     </main>
 
@@ -211,14 +213,30 @@
       return date.getFullYear();
     }
 
-    const date = new Date().getWeek();
-    if (localStorage.getItem('week') == date) {
-      const vita = localStorage.getItem('vitamina');
-      $('#btGerar').hide();
+    $('#btShow').hide();
+    $('#btHide').hide();
+    $('#btShow').on('click', function () {
+      $('#btHide').show();
+      $('#btShow').hide();
 
+      const vita = localStorage.getItem('vitamina');
       $('#vitamina').text(vita);
+      $('#vitamina').show(vita);
       $('#textVitamina').html('&#9825; Vitamina para fortalecer o coração. &#9825;');
       $('#resultado').show();
+    });
+    $('#btHide').on('click', function () {
+      $('#btHide').hide();
+      $('#btShow').show();
+
+      $('#vitamina').hide();
+      $('#resultado').hide();
+    });
+
+    const date = new Date().getWeek();
+    if (localStorage.getItem('week') == date) {
+      $('#btGerar').hide();
+      $('#btShow').show();
     } else {
       const listVitaminas = [
         'Café na Cama',
@@ -240,6 +258,8 @@
       $('#resultado').hide();
       $('#btGerar').on('click', function () {
         $('#btGerar').hide();
+        $('#btShow').hide();
+        $('#btHide').show();
 
         const item = listVitaminas[Math.floor(Math.random() * listVitaminas.length)];
         $('#vitamina').text(item);
